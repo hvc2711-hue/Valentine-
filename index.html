@@ -17,6 +17,18 @@ body{
     overflow:hidden;
 }
 
+/* FULLSCREEN HEART LAYER */
+#hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+}
+
 /* Card */
 .card{
     background:white;
@@ -63,13 +75,13 @@ button{
 /* Hearts */
 .heart{
     position:absolute;
-    bottom:-20px;
-    color:#ff4d6d;
+    bottom:-30px;
     animation:float 6s linear infinite;
 }
+
 @keyframes float{
     from{transform:translateY(0);opacity:1;}
-    to{transform:translateY(-100vh);opacity:0;}
+    to{transform:translateY(-110vh);opacity:0;}
 }
 </style>
 </head>
@@ -114,16 +126,17 @@ noBtn.addEventListener("mouseover",moveNo);
 noBtn.addEventListener("touchstart",moveNo);
 
 /* HEARTS */
-function heart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(15+Math.random()*10)+"px";
-  document.getElementById("hearts").appendChild(h);
-  setTimeout(()=>h.remove(),6000);
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(16+Math.random()*20)+"px";
+  document.getElementById("hearts").appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
 }
-setInterval(heart,300);
+
+setInterval(createHeart,300);
 </script>
 
 </body>
