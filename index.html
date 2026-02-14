@@ -6,78 +6,95 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    font-family:Arial, sans-serif;
-    overflow:hidden;
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
 }
 
 /* Card */
-.card{
-    background:white;
-    padding:30px 20px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 8px 25px rgba(0,0,0,0.2);
-    width:90%;
-    max-width:340px;
-    z-index:2;
+.card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 340px;
+    position: relative;
+    z-index: 2;
 }
 
-h1{
-    color:#ff4d6d;
-    font-size:22px;
-    line-height:1.4;
+h1 {
+    color: #ff4d6d;
+    margin-bottom: 15px;
+    font-size: 22px;
+    line-height: 1.4;
 }
 
-.buttons{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
-    gap:15px;
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
-button{
-    padding:12px 22px;
-    border:none;
-    border-radius:25px;
-    font-size:16px;
-    cursor:pointer;
+button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.yes{background:#ff4d6d;color:white;}
-.no{background:#ddd;color:#333;position:relative;}
+.yes {
+    background: #ff4d6d;
+    color: white;
+}
 
-#yesMsg{
-    display:none;
-    color:#ff4d6d;
-    margin-top:15px;
-    font-size:18px;
+.no {
+    background: #ddd;
+    color: #333;
+    position: relative;
+}
+
+/* YES message */
+#yesMsg {
+    display: none;
+    font-size: 18px;
+    color: #ff4d6d;
+    margin-top: 15px;
 }
 
 /* Hearts */
-.heart{
-    position:absolute;
-    bottom:-20px;
-    color:#ff4d6d;
-    animation:float 6s linear infinite;
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    color: #ff4d6d;
 }
-@keyframes float{
-    from{transform:translateY(0);opacity:1;}
-    to{transform:translateY(-100vh);opacity:0;}
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Floating Hearts Container -->
 <div id="hearts"></div>
 
+<!-- Card -->
 <div class="card">
     <h1>
         Bujji Bangari 💕<br>
@@ -91,7 +108,7 @@ button{
     </div>
 
     <p id="tapText" style="color:#ff4d6d;font-size:14px;margin-top:12px;">
-        Tap anywhere ❤️
+        Tap anywhere to play music ❤️
     </p>
 
     <div id="yesMsg">
@@ -99,50 +116,51 @@ button{
     </div>
 </div>
 
-<!-- RELIABLE MUSIC -->
-<audio id="music" preload="auto" loop>
-  <source src="https://cdn.pixabay.com/audio/2023/03/21/audio_5f9c0c9e59.mp3" type="audio/mpeg">
+<!-- Music -->
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e9a9d2d5.mp3?filename=romantic-love-ambient-11065.mp3" type="audio/mp3">
 </audio>
 
 <script>
-/* MUSIC — guaranteed start */
-function startMusic(){
-  const m=document.getElementById("music");
-  m.volume=0.8;
-  m.play().catch(()=>{});
-  document.getElementById("tapText").style.display="none";
+/* MUSIC START AFTER FIRST TAP */
+function startMusic() {
+    const music = document.getElementById("music");
+    music.play().catch(()=>{});
+    document.getElementById("tapText").style.display = "none";
 }
-document.addEventListener("click",startMusic,{once:true});
-document.addEventListener("touchstart",startMusic,{once:true});
+document.addEventListener("click", startMusic, { once: true });
 
-/* YES */
-function sayYes(){
-  document.getElementById("yesMsg").style.display="block";
+/* YES CLICK */
+function sayYes() {
+    document.getElementById("yesMsg").style.display = "block";
 }
 
-/* RUNNING NO */
-const noBtn=document.getElementById("noBtn");
-function moveNo(){
-  const x=Math.random()*(window.innerWidth-100);
-  const y=Math.random()*(window.innerHeight-50);
-  noBtn.style.position="absolute";
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
-}
-noBtn.addEventListener("mouseover",moveNo);
-noBtn.addEventListener("touchstart",moveNo);
+/* RUNNING NO BUTTON */
+const noBtn = document.getElementById("noBtn");
 
-/* HEARTS */
-function heart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(15+Math.random()*10)+"px";
-  document.getElementById("hearts").appendChild(h);
-  setTimeout(()=>h.remove(),6000);
+function moveNo() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 }
-setInterval(heart,300);
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* HEARTS ANIMATION */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random()*10) + "px";
+    heart.style.animationDuration = (3 + Math.random()*3) + "s";
+    document.getElementById("hearts").appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart, 300);
 </script>
 
 </body>
