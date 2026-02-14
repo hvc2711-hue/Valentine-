@@ -6,97 +6,124 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-    }
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+}
 
-    .card {
-        background: white;
-        padding: 30px 40px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        position: relative;
-    }
+/* Card */
+.card{
+    background:white;
+    padding:30px 20px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
+    width:90%;
+    max-width:340px;
+    z-index:2;
+}
 
-    h1 {
-        color: #ff4d6d;
-        margin-bottom: 25px;
-    }
+h1{
+    color:#ff4d6d;
+    font-size:22px;
+    line-height:1.4;
+}
 
-    .buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
+.buttons{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
 
-    button {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 25px;
-        font-size: 18px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:25px;
+    font-size:16px;
+    cursor:pointer;
+}
 
-    .yes {
-        background: #ff4d6d;
-        color: white;
-    }
+.yes{background:#ff4d6d;color:white;}
+.no{background:#ddd;color:#333;position:relative;}
 
-    .yes:hover {
-        transform: scale(1.1);
-    }
+#yesMsg{
+    display:none;
+    color:#ff4d6d;
+    margin-top:15px;
+    font-size:18px;
+}
 
-    .no {
-        background: #ddd;
-        color: black;
-        position: relative;
-    }
-
-    #yesMsg {
-        margin-top: 20px;
-        color: #ff4d6d;
-        font-size: 20px;
-        display: none;
-    }
+/* Hearts */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    color:#ff4d6d;
+    animation:float 6s linear infinite;
+}
+@keyframes float{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-100vh);opacity:0;}
+}
 </style>
 </head>
 
 <body>
 
+<div id="hearts"></div>
+
 <div class="card">
-    <h1>Bujji Bangari Will You Be My Valentine? I am gonna Love You so much ❤️</h1>
+    <h1>
+        Bujji Bangari 💕<br>
+        Will You Be My Valentine?<br>
+        I am gonna love you so much ❤️
+    </h1>
 
     <div class="buttons">
         <button class="yes" onclick="sayYes()">Yes ❤️</button>
         <button class="no" id="noBtn">No 😢</button>
     </div>
 
-    <div id="yesMsg">Yayyyy 💖 I love youuu so much Bujji 😍</div>
+    <div id="yesMsg">
+        Yayyyy 💖 I love youuu so much Bujji 😍
+    </div>
 </div>
 
 <script>
-function sayYes() {
-    document.getElementById("yesMsg").style.display = "block";
+/* YES */
+function sayYes(){
+  document.getElementById("yesMsg").style.display="block";
 }
 
-// Move No button on hover
-const noBtn = document.getElementById("noBtn");
+/* RUNNING NO */
+const noBtn=document.getElementById("noBtn");
+function moveNo(){
+  const x=Math.random()*(window.innerWidth-100);
+  const y=Math.random()*(window.innerHeight-50);
+  noBtn.style.position="absolute";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+}
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("touchstart",moveNo);
 
-noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 200 - 100;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
+/* HEARTS */
+function heart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(15+Math.random()*10)+"px";
+  document.getElementById("hearts").appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+setInterval(heart,300);
 </script>
 
 </body>
