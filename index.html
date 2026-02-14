@@ -116,19 +116,7 @@ button {
     </div>
 </div>
 
-<!-- Music -->
-<audio id="music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e9a9d2d5.mp3?filename=romantic-love-ambient-11065.mp3" type="audio/mp3">
-</audio>
 
-<script>
-/* MUSIC START AFTER FIRST TAP */
-function startMusic() {
-    const music = document.getElementById("music");
-    music.play().catch(()=>{});
-    document.getElementById("tapText").style.display = "none";
-}
-document.addEventListener("click", startMusic, { once: true });
 
 /* YES CLICK */
 function sayYes() {
