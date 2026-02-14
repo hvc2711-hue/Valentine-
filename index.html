@@ -90,27 +90,22 @@ button{
         <button class="no" id="noBtn">No 😢</button>
     </div>
 
-    <p id="tapText" style="color:#ff4d6d;font-size:14px;margin-top:12px;">
-        Tap anywhere ❤️
-    </p>
-
     <div id="yesMsg">
         Yayyyy 💖 I love youuu so much Bujji 😍
     </div>
 </div>
 
-<!-- RELIABLE MUSIC -->
+<!-- Music -->
 <audio id="music" preload="auto" loop>
   <source src="https://cdn.pixabay.com/audio/2023/03/21/audio_5f9c0c9e59.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* MUSIC — guaranteed start */
+/* MUSIC START ON FIRST TOUCH */
 function startMusic(){
   const m=document.getElementById("music");
   m.volume=0.8;
   m.play().catch(()=>{});
-  document.getElementById("tapText").style.display="none";
 }
 document.addEventListener("click",startMusic,{once:true});
 document.addEventListener("touchstart",startMusic,{once:true});
