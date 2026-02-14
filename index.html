@@ -6,99 +6,94 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
-  font-family:Arial, sans-serif;
-  overflow:hidden;
-  text-align:center;
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
 }
 
-h1{
-  color:white;
-  font-size:28px;
-  margin-bottom:30px;
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-button{
-  padding:12px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
-  margin:10px;
+h1 {
+    color: #ff4d6d;
 }
 
-#yes{ background:#28a745; color:white; }
-#no{
-  background:#ff4d6d;
-  color:white;
-  position:absolute;
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
-.heart{
-  position:fixed;
-  bottom:-20px;
-  animation:float 6s linear infinite;
-  font-size:20px;
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-@keyframes float{
-  from{transform:translateY(0);}
-  to{transform:translateY(-110vh);}
+.yes {
+    background: #ff4d6d;
+    color: white;
+}
+
+.no {
+    background: #ddd;
+}
+
+.yes:hover {
+    background: #e63956;
+}
+
+.no:hover {
+    background: #bbb;
 }
 </style>
 </head>
 
-<body onclick="playMusic()">
+<body>
 
-<audio id="bgm" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_3c3f9b0f3b.mp3" type="audio/mpeg">
-</audio>
+<div class="card">
+    <h1>Bujji Bangari Will You Be My Valentine? I am gonna Love you so much ❤️</h1>
 
-<div>
-  <h1>Bujji Bangari 💕<br>Will you be my Valentine?</h1>
-  <button id="yes" onclick="yesClick()">Yes 💖</button>
-  <button id="no">No 😢</button>
+    <div class="buttons">
+        <button class="yes" onclick="yesClicked()">Yes 💖</button>
+        <button class="no" onclick="noClicked()">No 😢</button>
+    </div>
 </div>
 
+<!-- Background Music -->
+<audio id="music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e9a9d2d5.mp3?filename=romantic-love-ambient-11065.mp3" type="audio/mp3">
+</audio>
+
 <script>
-const noBtn = document.getElementById("no");
-const music = document.getElementById("bgm");
-
-function moveNo(){
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 50);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+function yesClicked() {
+    document.body.innerHTML =
+    "<h1 style='color:white;text-align:center;margin-top:20%;font-size:40px;'>Yayyy ❤️ I Love You 😍</h1>";
 }
 
-noBtn.addEventListener("mouseover", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
-
-function yesClick(){
-  document.body.innerHTML =
-  "<h1 style='color:white'>Yayyyy ❤️ She said YES 💕</h1>";
+function noClicked() {
+    alert("Oh no 😢 But I still love you ❤️");
 }
 
-function playMusic(){
-  music.play();
-}
-
-// hearts
-setInterval(()=>{
-  const heart=document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML="💖";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.fontSize=(15+Math.random()*25)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),6000);
-},400);
+/* Fix autoplay block on mobile */
+window.addEventListener("click", () => {
+    document.getElementById("music").play();
+});
 </script>
 
 </body>
