@@ -9,38 +9,45 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #ff758c, #ff7eb3);
     height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
 }
 
+/* Card */
 .card {
     background: white;
-    padding: 40px;
+    padding: 30px 20px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 320px;
+    position: relative;
+    z-index: 2;
 }
 
 h1 {
     color: #ff4d6d;
+    margin-bottom: 10px;
 }
 
 .buttons {
-    margin-top: 25px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 button {
-    padding: 12px 25px;
+    padding: 12px 20px;
     border: none;
     border-radius: 25px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -52,48 +59,101 @@ button {
 
 .no {
     background: #ddd;
+    color: #333;
+    position: relative;
 }
 
-.yes:hover {
-    background: #e63956;
+/* Hearts animation */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    color: #ff4d6d;
 }
 
-.no:hover {
-    background: #bbb;
+@keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
+
+/* YES message */
+#yesMsg {
+    display: none;
+    font-size: 20px;
+    color: #ff4d6d;
+    margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- Floating Hearts -->
+<div id="hearts"></div>
+
+<!-- Card -->
 <div class="card">
-    <h1>Bujji Bangari Will You Be My Valentine? I am gonna Love you so much ❤️</h1>
+    <h1>Bujji Bangari Will You Be My Valentine? I am gonna Love You so much❤️</h1>
 
     <div class="buttons">
-        <button class="yes" onclick="yesClicked()">Yes 💖</button>
-        <button class="no" onclick="noClicked()">No 😢</button>
+        <button class="yes" onclick="sayYes()">Yes ❤️</button>
+        <button class="no" id="noBtn">No 😢</button>
     </div>
+
+    <p id="tapText" style="color:#ff4d6d;font-size:14px;margin-top:12px;">
+        Tap anywhere to play music ❤️
+    </p>
+
+    <div id="yesMsg">Yayyyy 💖 I love youuu so much Bujji 😍</div>
 </div>
 
-<!-- Background Music -->
-<audio id="music" autoplay loop>
+<!-- Music -->
+<audio id="music" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8e9a9d2d5.mp3?filename=romantic-love-ambient-11065.mp3" type="audio/mp3">
 </audio>
 
 <script>
-function yesClicked() {
-    document.body.innerHTML =
-    "<h1 style='color:white;text-align:center;margin-top:20%;font-size:40px;'>Yayyy ❤️ I Love You 😍</h1>";
+/* MUSIC START ON FIRST TAP */
+function startMusic() {
+    const music = document.getElementById("music");
+    music.play().catch(()=>{});
+    document.getElementById("tapText").style.display = "none";
+}
+document.addEventListener("click", startMusic, { once: true });
+
+/* YES BUTTON */
+function sayYes() {
+    document.getElementById("yesMsg").style.display = "block";
 }
 
-function noClicked() {
-    alert("Oh no 😢 But I still love you ❤️");
+/* RUNNING NO BUTTON */
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+function moveNo() {
+    const i = Math.floor(Math.random() * (window.innerWidth - 100));
+    const j = Math.floor(Math.random() * (window.innerHeight - 50));
+    noBtn.style.position = "absolute";
+    noBtn.style.left = i + "px";
+    noBtn.style.top = j + "px";
 }
 
-/* Fix autoplay block on mobile */
-window.addEventListener("click", () => {
-    document.getElementById("music").play();
-});
+/* HEARTS GENERATOR */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random()*10+15)+"px";
+    heart.style.animationDuration = (Math.random()*3+3)+"s";
+    document.getElementById("hearts").appendChild(heart);
+
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart, 300);
 </script>
 
 </body>
